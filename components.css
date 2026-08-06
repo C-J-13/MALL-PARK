@@ -1,0 +1,540 @@
+/* ==========================================================================
+   AURA OS | COMPONENTS 
+   Widgets, AI Assistant, Navigation, and Command Palette
+   ========================================================================== */
+
+/* 1. DOCK NAVIGATION */
+.dock-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2);
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s var(--ease-cinematic);
+}
+
+.nav-btn:hover {
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-btn.active {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.dock-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.panel-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* 2. PREMIUM WIDGET CARDS */
+.widget-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.trend.up { color: var(--accent-emerald); }
+.trend.down { color: #EF4444; }
+
+.widget-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.widget-value .unit {
+    font-size: 1rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+/* 3. AI ASSISTANT PANEL */
+.ai-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2);
+}
+
+.ai-orb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    box-shadow: 0 0 10px #FFF, 0 0 20px #FFF;
+    animation: ai-pulse 2s infinite ease-in-out;
+}
+
+@keyframes ai-pulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+.ai-feed {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ai-message {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.ai-message.suggestion {
+    border-color: rgba(255, 92, 0, 0.3);
+    background: linear-gradient(180deg, rgba(255, 92, 0, 0.05) 0%, transparent 100%);
+}
+
+.icon-sm {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.suggestion .icon-sm { color: var(--accent-amber); }
+
+.time {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+}
+
+.btn-micro {
+    margin-top: 12px;
+    background: var(--text-primary);
+    color: var(--bg-void);
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.btn-micro:hover { transform: scale(1.05); }
+
+/* 4. COMMAND PALETTE (Linear Style) */
+.cmd-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 15vh;
+}
+
+.cmd-overlay.hidden {
+    display: none;
+}
+
+.cmd-palette {
+    width: 100%;
+    max-width: 600px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.cmd-input-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--glass-border);
+    gap: 16px;
+}
+
+.cmd-input-wrapper .material-symbols-rounded {
+    color: var(--text-tertiary);
+}
+
+.cmd-input-wrapper input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-family: inherit;
+}
+
+.cmd-input-wrapper input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.cmd-results {
+    padding: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cmd-group {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    padding: 8px 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cmd-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.cmd-item:hover, .cmd-item.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+/* 5. TOP HUD ELEMENTS */
+.hud-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.hud-left, .hud-right, .hud-center {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+}
+.status-dot.online {
+    background: var(--accent-emerald);
+    box-shadow: 0 0 12px var(--accent-emerald);
+}
+
+.command-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--glass-border);
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.command-hint:hover { background: rgba(255,255,255,0.1); }
+.command-hint kbd {
+    background: rgba(255,255,255,0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.65rem;
+}
+
+/* ==========================================================================
+   HACKATHON ADDITIONS: Floor Selector & Booking Form
+   ========================================================================== */
+
+.stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 10;
+}
+
+.floor-selector {
+    display: flex;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+}
+
+.floor-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.floor-btn:hover { color: var(--text-primary); }
+.floor-btn.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.pulse { animation: ai-pulse 2s infinite; }
+
+.glass-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    outline: none;
+    font-family: 'Space Grotesk', sans-serif;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.glass-input:focus { border-color: var(--accent-emerald); }
+.fee-card { background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.2); }
+.glass-divider { border: none; border-top: 1px solid var(--glass-border); margin: 12px 0; }
+.full-width { width: 100%; padding: 16px; border-radius: var(--radius-sm); background: var(--text-primary); color: var(--bg-void); font-weight: 700; border: none; cursor: pointer;}
+
+/* Left Panel Tab Controller */
+.dock-tab {
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.dock-tab.active {
+    display: flex !important;
+}
+
+.dock-tab.hidden {
+    display: none !important;
+}
+
+.dock-content {
+    overflow-y: hidden; /* Removes scrolling, content matches tab selection */
+}
+
+/* Locks the Chart.js canvas from growing infinitely */
+.chart-wrapper {
+    position: relative;
+    height: 80px; 
+    width: 100%;
+}
+
+/* ==========================================================================
+   MAGIC OVERFLOW FIXES & LEGEND STYLES
+   ========================================================================== */
+
+/* This guarantees the right panel scrolls and buttons stay visible! */
+.panel-state {
+    display: none !important;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0; /* The Magic Fix */
+    flex-direction: column;
+}
+.panel-state.active {
+    display: flex !important;
+}
+
+/* Fix Left Tab Icon Clicks */
+.nav-btn * {
+    pointer-events: none; /* Prevents icons from hijacking the button click */
+}
+
+/* Legend & Filters */
+.map-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 12px 24px;
+    z-index: 10;
+}
+
+.map-legend {
+    display: flex;
+    gap: 16px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-item .box { width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.2); }
+.box.occ { background: rgba(255, 92, 0, 0.25); border-color: rgba(255, 92, 0, 0.6); }
+.box.avail { background: rgba(255, 255, 255, 0.04); }
+.box.ev { background: rgba(16, 185, 129, 0.15); border-color: #10B981; }
+
+.map-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-btn {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.filter-btn:hover, .filter-btn.active {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+    border-color: rgba(255,255,255,0.3);
+}
+
+/* Ensure Ctrl+K Overlay is strictly on top */
+.cmd-overlay { z-index: 99999 !important; }
+
+/* ==========================================================================
+   MAGIC SCROLL FIX (Prevents buttons from going into the void)
+   ========================================================================== */
+.panel-dock.dock-right, 
+.panel-dock.dock-left {
+    min-height: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.panel-state, 
+.dock-tab,
+.dock-content {
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+    overflow-y: auto !important; /* FORCES internal scrolling */
+}
+
+/* Ensure the SVG icons don't steal the click events on the tabs */
+.nav-btn * {
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   AURA PRIMARY BUTTON STYLING
+   ========================================================================== */
+.btn-primary {
+    background: rgba(255, 92, 0, 0.15);
+    color: #FF5C00;
+    border: 1px solid rgba(255, 92, 0, 0.5);
+    padding: 14px 16px;
+    border-radius: var(--radius-sm, 8px);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background: rgba(255, 92, 0, 0.25);
+    border-color: #FF5C00;
+    box-shadow: 0 0 15px rgba(255, 92, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: #A1A1AA;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 16px;
+    border-radius: var(--radius-sm, 8px);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+}
+
+.full-width {
+    width: 100%;
+}
