@@ -18,6 +18,7 @@ const OSMain = {
         this.bindLeftDockTabs();
         this.bindCommandPalette();
         this.bindBookingEvents();
+       this.bindThemeToggle();
     },
 
     bindLeftDockTabs() {
