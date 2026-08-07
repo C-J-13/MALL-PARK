@@ -21,6 +21,31 @@ const OSMain = {
        this.bindThemeToggle();
     },
 
+   bindThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+
+    if (!toggle) return;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('aura-theme');
+
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+    }
+
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+
+        const isLight =
+            document.body.classList.contains('light-theme');
+
+        localStorage.setItem(
+            'aura-theme',
+            isLight ? 'light' : 'dark'
+        );
+    });
+},
+
     bindLeftDockTabs() {
         const navBtns = document.querySelectorAll('.dock-nav .nav-btn');
         navBtns.forEach(btn => {
