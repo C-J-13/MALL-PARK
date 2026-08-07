@@ -45,11 +45,26 @@
                 </div>
             </div>
             <!-- NEW: CURRENT SESSION BUTTON -->
-            <div class="hud-right">
-                <button id="btn-view-session" class="btn-primary" style="padding: 6px 14px; font-size: 0.75rem; letter-spacing: 1px; gap: 6px;">
-                    <span class="material-symbols-rounded icon-sm">timer</span> CURRENT SESSION
-                </button>
-            </div>
+            <div class="hud-right" style="display: flex; align-items: center; gap: 12px;">
+
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" 
+            aria-label="Toggle dark and light mode"
+            title="Toggle theme">
+
+        <span class="theme-icon sun-icon">☀</span>
+        <span class="theme-icon moon-icon">☾</span>
+
+        <span class="theme-toggle-knob"></span>
+    </button>
+
+    <button id="btn-view-session" class="btn-primary"
+            style="padding: 6px 14px; font-size: 0.75rem; letter-spacing: 1px; gap: 6px;">
+        <span class="material-symbols-rounded icon-sm">timer</span>
+        CURRENT SESSION
+    </button>
+
+</div>
         </header>
 
         <div class="spatial-workspace">
