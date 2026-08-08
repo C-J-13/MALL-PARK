@@ -141,11 +141,8 @@ const LandingPage = {
         };
 
         // Triggers to enter OS
-        document.getElementById('landing-page').addEventListener('scroll', () => {
-            const lp = document.getElementById('landing-page');
-            if (lp.scrollTop + lp.clientHeight >= lp.scrollHeight - 60) go();
-        }, { passive: true });
-
+        // NOTE: removed auto-enter when scrolling to the bottom of the landing page,
+        // because it caused accidental navigation while browsing content.
         document.querySelectorAll('[data-enter-dashboard]').forEach(btn =>
             btn.addEventListener('click', go)
         );
