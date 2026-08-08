@@ -18,7 +18,34 @@ const OSMain = {
         this.bindLeftDockTabs();
         this.bindCommandPalette();
         this.bindBookingEvents();
+        this.bindBookingInputs();
+        this.bindThemeToggle();
     },
+
+   bindThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+
+    if (!toggle) return;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('aura-theme');
+
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+    }
+
+    toggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+
+        const isLight =
+            document.body.classList.contains('light-theme');
+
+        localStorage.setItem(
+            'aura-theme',
+            isLight ? 'light' : 'dark'
+        );
+    });
+},
 
     bindLeftDockTabs() {
         const navBtns = document.querySelectorAll('.dock-nav .nav-btn');
@@ -247,16 +274,16 @@ const OSMain = {
         document.getElementById('popup-slot-id').innerText = slotId;
         
         let typeName = "Standard 4W";
-        let price = "₹50<span class='unit'>/hr</span>";
+        let price = "Estimate at checkout";
         let icon = "local_parking";
         let color = "#3B82F6";
 
-        if (type === 'ev') { typeName = "EV Charging Bay"; price = "₹100<span class='unit'>/hr</span>"; icon = "electric_car"; color = "#10B981"; }
-        if (type === '2w') { typeName = "2-Wheeler Spot"; price = "₹20<span class='unit'>/hr</span>"; icon = "two_wheeler"; color = "#A1A1AA"; }
-        if (type === 'accessible') { typeName = "Accessible Bay"; price = "₹50<span class='unit'>/hr</span>"; icon = "accessible"; color = "#3B82F6"; }
+        if (type === 'ev') { typeName = "EV Charging Bay"; price = "Estimate at checkout"; icon = "electric_car"; color = "#10B981"; }
+        if (type === '2w') { typeName = "2-Wheeler Spot"; price = "Estimate at checkout"; icon = "two_wheeler"; color = "#A1A1AA"; }
+        if (type === 'accessible') { typeName = "Accessible Bay"; price = "Estimate at checkout"; icon = "accessible"; color = "#3B82F6"; }
 
         document.getElementById('popup-slot-type').innerText = typeName;
-        document.getElementById('popup-slot-price').innerHTML = price;
+        document.getElementById('popup-slot-price').innerText = price;
         
         const iconEl = document.getElementById('popup-icon');
         if(iconEl) {
@@ -321,18 +348,29 @@ const OSMain = {
                 const slot = slotEl ? slotEl.innerText : 'B1';
                 const plateInput = document.getElementById('booking-plate');
                 const plate = (plateInput && plateInput.value) ? plateInput.value : 'MH 12 PA 9999';
-                
-                // Simplified default hour calculation for the session timer
-                const hours = 2; 
+                const inTime = document.getElementById('booking-in')?.value;
+                const outTime = document.getElementById('booking-out')?.value;
+                const fare = this.calculateFare(inTime, outTime);
+                const durationMinutes = this.getMinutesBetweenTimes(inTime, outTime);
+                const durationHours = durationMinutes > 0 ? durationMinutes / 60 : 2;
 
                 const rSlot = document.getElementById('receipt-slot-display');
                 const rPlate = document.getElementById('receipt-plate-display');
+                const rFare = document.getElementById('receipt-fare-display');
+                const rQRNote = document.getElementById('receipt-qr-note');
                 if (rSlot) rSlot.innerText = `Slot ${slot} Reserved`;
                 if (rPlate) rPlate.innerText = plate.toUpperCase();
+                if (rFare) rFare.innerText = fare ? `Estimated fare: ${fare}` : 'Fare estimate unavailable';
+                if (rQRNote) rQRNote.innerText = 'Scan this QR at exit to complete your payment.';
 
+                if (window.SpatialMap && typeof window.SpatialMap.bookSlot === 'function') {
+                    window.SpatialMap.bookSlot(slot);
+                }
+
+                this.setSessionQRCode(slot, plate, fare);
                 this.toggleBookingForm(false); // Restore main menu for next time
                 this.openSessionPage();
-                this.startTimer(hours); 
+                this.startTimer(durationHours);
             }
 
             // Extend Time in Session Page
@@ -375,6 +413,58 @@ const OSMain = {
             else if (slotId.startsWith('A')) typeLabel.innerHTML = `Accessible Bay &middot; Standard`;
             else typeLabel.innerHTML = `Car Bay &middot; Standard`;
         }
+    },
+
+    bindBookingInputs() {
+        const bookingIn = document.getElementById('booking-in');
+        const bookingOut = document.getElementById('booking-out');
+
+        const updateFare = () => {
+            const inTime = bookingIn ? bookingIn.value : '';
+            const outTime = bookingOut ? bookingOut.value : '';
+            const estimateEl = document.getElementById('booking-fare-estimate');
+            const fare = this.calculateFare(inTime, outTime);
+
+            if (estimateEl) {
+                estimateEl.innerText = fare ? `Estimated fare: ${fare}` : 'Enter check-out time to see estimated fare';
+            }
+        };
+
+        if (bookingIn) bookingIn.addEventListener('input', updateFare);
+        if (bookingOut) bookingOut.addEventListener('input', updateFare);
+    },
+
+    calculateFare(inTime, outTime) {
+        if (!inTime || !outTime) return null;
+        const minutes = this.getMinutesBetweenTimes(inTime, outTime);
+        if (minutes <= 0) return null;
+
+        if (minutes <= 30) return '₹0';
+        if (minutes <= 60) return '₹20';
+        if (minutes <= 120) return '₹30';
+        if (minutes <= 240) return '₹50';
+        if (minutes <= 480) return '₹70';
+
+        const extraHours = Math.ceil((minutes - 480) / 60);
+        return `₹${70 + extraHours * 10}`;
+    },
+
+    setSessionQRCode(slot, plate, fare) {
+        const qrImg = document.getElementById('receipt-qr-img');
+        if (!qrImg) return;
+        const payload = encodeURIComponent(`AURA PARK Exit Scan | Slot: ${slot} | Plate: ${plate.toUpperCase()} | Fare: ${fare || 'TBD'}`);
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${payload}`;
+    },
+
+    getMinutesBetweenTimes(inTime, outTime) {
+        const [inH, inM] = inTime.split(':').map(Number);
+        const [outH, outM] = outTime.split(':').map(Number);
+        if (Number.isNaN(inH) || Number.isNaN(inM) || Number.isNaN(outH) || Number.isNaN(outM)) return 0;
+
+        let start = inH * 60 + inM;
+        let end = outH * 60 + outM;
+        if (end <= start) end += 24 * 60; // next day
+        return end - start;
     },
 
     startTimer(hours) {

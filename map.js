@@ -92,29 +92,6 @@ const SpatialMap = {
         poly.setAttribute('stroke-width', '1.5');
         poly.style.transition = 'all 0.2s ease';
 
-        const clickHandler = () => {
-            if (!isOccupied && window.OSMain) {
-                // THE NEW MAGIC: Opens the Pop-up instead of the Dock!
-                window.OSMain.showSlotPopup(cfg.id, cfg.type);
-            }
-        };
-
-        poly.addEventListener('click', clickHandler);
-        g.addEventListener('click', clickHandler);
-
-        if (!isOccupied) {
-            poly.addEventListener('mouseenter', () => {
-                poly.setAttribute('stroke', '#FF5C00');
-                poly.setAttribute('fill', 'rgba(255, 92, 0, 0.4)');
-            });
-            poly.addEventListener('mouseleave', () => {
-                poly.setAttribute('stroke', stroke);
-                poly.setAttribute('fill', fill);
-            });
-        }
-
-        g.appendChild(poly);
-
         const text = document.createElementNS(this.svgNS, 'text');
         text.setAttribute('x', cfg.x + (cfg.w / 2));
         text.setAttribute('y', cfg.y + (cfg.h / 2) + (cfg.type === '2w' ? 3 : 4));
@@ -124,10 +101,43 @@ const SpatialMap = {
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('pointer-events', 'none');
         text.textContent = cfg.label || cfg.id;
-        g.appendChild(text);
 
+        const slotObj = {
+            id: cfg.id,
+            poly,
+            text,
+            isOccupied,
+            isManualBooked: false,
+            stroke,
+            fill,
+            type: cfg.type,
+            g
+        };
+
+        const clickHandler = () => {
+            if (!slotObj.isOccupied && window.OSMain) {
+                window.OSMain.showSlotPopup(cfg.id, cfg.type);
+            }
+        };
+
+        poly.addEventListener('click', clickHandler);
+        g.addEventListener('click', clickHandler);
+
+        if (!slotObj.isOccupied) {
+            poly.addEventListener('mouseenter', () => {
+                poly.setAttribute('stroke', '#FF5C00');
+                poly.setAttribute('fill', 'rgba(255, 92, 0, 0.4)');
+            });
+            poly.addEventListener('mouseleave', () => {
+                poly.setAttribute('stroke', slotObj.stroke);
+                poly.setAttribute('fill', slotObj.fill);
+            });
+        }
+
+        g.appendChild(poly);
+        g.appendChild(text);
         this.container.appendChild(g);
-        this.slots.push({ id: cfg.id, poly, text, isOccupied, stroke, fill, type: cfg.type, g });
+        this.slots.push(slotObj);
     },
 
     drawText(str, x, y, color) {
@@ -202,9 +212,10 @@ const SpatialMap = {
 
     startLiveSimulation() {
         setInterval(() => {
-            if (this.slots.length === 0) return;
-            const rand = Math.floor(Math.random() * this.slots.length);
-            const slot = this.slots[rand];
+            const availableSlots = this.slots.filter(slot => !slot.isManualBooked);
+            if (availableSlots.length === 0) return;
+            const rand = Math.floor(Math.random() * availableSlots.length);
+            const slot = availableSlots[rand];
             slot.isOccupied = !slot.isOccupied;
 
             if (slot.isOccupied) {
@@ -225,7 +236,34 @@ const SpatialMap = {
         const occupied = this.slots.filter(s => s.isOccupied).length;
         const pct = total === 0 ? 0 : Math.round((occupied / total) * 100);
         const counterEl = document.getElementById('counter-occupancy');
+        const fillEl = document.getElementById('occupancy-fill');
         if (counterEl) counterEl.innerText = `${pct}%`;
+        if (fillEl) fillEl.style.width = `${pct}%`;
+    },
+
+    setSlotOccupancy(slotId, occupied, manual = false) {
+        const slot = this.slots.find(s => s.id === slotId);
+        if (!slot) return;
+        slot.isOccupied = occupied;
+        if (manual) slot.isManualBooked = occupied;
+
+        if (slot.isOccupied) {
+            slot.poly.setAttribute('fill', 'rgba(255, 92, 0, 0.25)');
+            slot.poly.setAttribute('stroke', 'rgba(255, 92, 0, 0.6)');
+            slot.text.setAttribute('fill', '#FF5C00');
+            slot.g.style.cursor = 'not-allowed';
+        } else {
+            slot.poly.setAttribute('fill', slot.fill);
+            slot.poly.setAttribute('stroke', slot.stroke);
+            slot.text.setAttribute('fill', '#FFFFFF');
+            slot.g.style.cursor = 'pointer';
+        }
+
+        this.updateTelemetryHUD();
+    },
+
+    bookSlot(slotId) {
+        this.setSlotOccupancy(slotId, true, true);
     }
 };
 

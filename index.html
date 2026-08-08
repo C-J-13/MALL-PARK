@@ -8,20 +8,208 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,0,0" />
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
+   <link rel="stylesheet" href="variables.css">
+<link rel="stylesheet" href="layout.css">
+<link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="landing.css">
 </head>
 <body>
     
     <div id="boot-sequence">
         <div class="boot-content">
             <div class="aura-logo" id="boot-logo">AURA</div>
-            <div class="boot-text" id="boot-text">Intelligent Spatial Infrastructure</div>
+            <div class="boot-text" id="boot-text">MallPark — Smart Parking for Modern Malls</div>
             <div class="boot-loader">
                 <div class="boot-progress" id="boot-progress"></div>
             </div>
         </div>
+    </div>
+
+    <!-- ====================================================================
+         LANDING PAGE (Sits on top of the OS)
+         ==================================================================== -->
+    <div id="landing-page">
+        <!-- Navigation -->
+        <nav class="lp-nav">
+            <a href="#" class="lp-nav-logo">AURA<div class="logo-dot"></div></a>
+            <ul class="lp-nav-links">
+                <li><a href="#vision">Vision</a></li>
+                <li><a href="#infrastructure">Infrastructure</a></li>
+                <li><a href="#telemetry">Telemetry</a></li>
+            </ul>
+            <button class="lp-nav-cta" data-enter-dashboard>Launch OS</button>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="lp-hero">
+            <div class="lp-hero-bg"></div>
+            <div class="lp-hero-word">AURA</div>
+            <div class="lp-hero-copy">
+                <h1>Spatial Intelligence<br>Redefined.</h1>
+                <p>Advanced telemetry and automated infrastructure management for next-generation parking systems.</p>
+                <button class="lp-btn-primary" data-enter-dashboard>Enter System</button>
+            </div>
+            <div class="lp-scroll-line">
+                <span>Scroll</span>
+                <div class="lp-scroll-line-bar"></div>
+            </div>
+        </section>
+
+        <!-- Ticker -->
+        <div class="lp-ticker">
+            <div class="lp-ticker-track">
+                <div class="lp-ticker-item"><span>●</span> System Online</div>
+                <div class="lp-ticker-item"><span>●</span> 99.9% Uptime</div>
+                <div class="lp-ticker-item"><span>●</span> Live Telemetry</div>
+                <div class="lp-ticker-item"><span>●</span> AI Optimization</div>
+                <div class="lp-ticker-item"><span>●</span> System Online</div>
+                <div class="lp-ticker-item"><span>●</span> 99.9% Uptime</div>
+                <div class="lp-ticker-item"><span>●</span> Live Telemetry</div>
+            </div>
+        </div>
+
+        <!-- About & Auto-Counting Stats -->
+        <section class="lp-about" id="vision">
+            <div class="lp-about-eyebrow">Metrics</div>
+            <h2>Infrastructure at a <em>glance</em></h2>
+            <p>Aura provides real-time analytics and spatial mapping to completely eliminate friction in your facility.</p>
+            <div class="lp-stats-row">
+                <div class="lp-stat-cell">
+                    <div class="lp-stat-num"><span data-count="120">0</span></div>
+                    <div class="lp-stat-label">Total Bays</div>
+                </div>
+                <div class="lp-stat-cell">
+                    <div class="lp-stat-num"><span data-count="99.9" data-float="true">0</span><span class="red">%</span></div>
+                    <div class="lp-stat-label">System Uptime</div>
+                </div>
+                <div class="lp-stat-cell">
+                    <div class="lp-stat-num"><span data-count="8">0</span></div>
+                    <div class="lp-stat-label">EV Chargers</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Bento Grid -->
+        <section class="lp-features" id="infrastructure">
+            <div class="lp-features-header">
+                <h2>Intelligent Features</h2>
+                <p>Everything you need to monitor, manage, and monetize your spatial assets.</p>
+            </div>
+            <div class="lp-bento">
+                <div class="lp-bento-card">
+                    <div class="card-icon"><span class="material-symbols-rounded">electric_car</span></div>
+                    <h3>EV Fleet Sync</h3>
+                    <p>Live monitoring of charging states and power delivery across the grid.</p>
+                </div>
+                <div class="lp-bento-card">
+                    <div class="card-icon"><span class="material-symbols-rounded">monitoring</span></div>
+                    <h3>Revenue Analytics</h3>
+                    <p>Track hourly velocity and historical occupancy trends automatically.</p>
+                </div>
+                <div class="lp-bento-card wide">
+                    <div class="card-icon"><span class="material-symbols-rounded">grid_view</span></div>
+                    <h3>Spatial Mapping</h3>
+                    <p>A live, 2D architectural blueprint of your entire facility updating in real-time.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="lp-pricing" id="pricing">
+            <div class="lp-pricing-grid">
+                <div class="lp-pricing-copy">
+                    <div class="lp-about-eyebrow">Parking Rates</div>
+                    <h2>Simple, transparent pricing.</h2>
+                    <p>No hidden charges. Rates apply seven days a week. Season passes unlock unlimited entry with no barrier delay.</p>
+                    <a href="#" class="lp-pricing-link">Buy a monthly pass <span>→</span></a>
+                </div>
+                <div class="lp-pricing-card">
+                    <div class="pricing-table-header">
+                        <span>Duration</span>
+                        <span>Car</span>
+                        <span>Bike</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span>0 – 30 min</span>
+                        <span class="pricing-note">Free</span>
+                        <span class="pricing-note">Free</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span>30 min – 1 hr</span>
+                        <span>₹20</span>
+                        <span>₹10</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span>1 – 2 hrs</span>
+                        <span>₹30</span>
+                        <span>₹20</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span>2 – 4 hrs</span>
+                        <span>₹50</span>
+                        <span>₹40</span>
+                    </div>
+                    <div class="pricing-row">
+                        <span>4 – 8 hrs</span>
+                        <span>₹70</span>
+                        <span>₹60</span>
+                    </div>
+                    <div class="pricing-row pricing-total">
+                        <span>Monthly pass</span>
+                        <span class="pricing-highlight">₹2,000</span>
+                        <span class="pricing-highlight">₹1,800</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="lp-cta-section" id="telemetry">
+            <h2>Ready to Initialize?</h2>
+            <p>Access the live dashboard to begin spatial monitoring.</p>
+            <button class="lp-btn-primary" data-enter-dashboard>Launch Dashboard</button>
+        </section>
+
+        <!-- Footer -->
+        <footer class="lp-footer">
+            <div class="lp-footer-content">
+                <div class="lp-footer-brand">
+                    <div class="footer-logo">AURA PARK</div>
+                    <p>Advanced parking and mall infrastructure management with intuitive live telemetry.</p>
+                    <p class="footer-address">123 MallPark Avenue, City Center</p>
+                </div>
+                <div class="lp-footer-links">
+                    <div>
+                        <div class="footer-section-title">Parking</div>
+                        <a href="#infrastructure">Live availability</a>
+                        <a href="#pricing">Parking rates</a>
+                        <a href="#pricing">Season passes</a>
+                        <a href="#infrastructure">EV charging</a>
+                        <a href="#vision">Accessibility</a>
+                    </div>
+                    <div>
+                        <div class="footer-section-title">Mall</div>
+                        <a href="#vision">Store directory</a>
+                        <a href="#">Opening hours</a>
+                        <a href="#">Events</a>
+                        <a href="#">Food & dining</a>
+                        <a href="#">Gift cards</a>
+                    </div>
+                    <div>
+                        <div class="footer-section-title">Help</div>
+                        <a href="#">FAQs</a>
+                        <a href="#">Lost & found</a>
+                        <a href="#">Complaints</a>
+                        <a href="#">Privacy policy</a>
+                        <a href="#">Terms of use</a>
+                    </div>
+                </div>
+            </div>
+            <div class="lp-footer-bottom">
+                <span>© 2026 AURA PARK. All rights reserved.</span>
+                <span class="footer-contact">📞 0161 400 5100 • ✉ parking@aurapark.io</span>
+            </div>
+        </footer>
     </div>
 
     <div class="ambient-mesh">
@@ -34,6 +222,10 @@
         
         <header class="system-hud glass-panel" style="z-index: 100; position: relative;">
             <div class="hud-left">
+                <!-- NEW: Back to Landing Page Button -->
+                <button id="btn-back-home" class="btn-micro" style="margin: 0 16px 0 0; padding: 6px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); color: var(--text-secondary); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;">
+                    <span class="material-symbols-rounded" style="font-size: 1.1rem;">arrow_back</span>
+                </button>
                 <span class="status-dot online"></span>
                 <span class="hud-text">SYSTEM.ONLINE</span>
             </div>
@@ -45,11 +237,26 @@
                 </div>
             </div>
             <!-- NEW: CURRENT SESSION BUTTON -->
-            <div class="hud-right">
-                <button id="btn-view-session" class="btn-primary" style="padding: 6px 14px; font-size: 0.75rem; letter-spacing: 1px; gap: 6px;">
-                    <span class="material-symbols-rounded icon-sm">timer</span> CURRENT SESSION
-                </button>
-            </div>
+            <div class="hud-right" style="display: flex; align-items: center; gap: 12px;">
+
+    <!-- Theme Toggle -->
+    <button id="theme-toggle" class="theme-toggle" 
+            aria-label="Toggle dark and light mode"
+            title="Toggle theme">
+
+        <span class="theme-icon sun-icon">☀</span>
+        <span class="theme-icon moon-icon">☾</span>
+
+        <span class="theme-toggle-knob"></span>
+    </button>
+
+    <button id="btn-view-session" class="btn-primary"
+            style="padding: 6px 14px; font-size: 0.75rem; letter-spacing: 1px; gap: 6px;">
+        <span class="material-symbols-rounded icon-sm">timer</span>
+        CURRENT SESSION
+    </button>
+
+</div>
         </header>
 
         <div class="spatial-workspace">
@@ -172,7 +379,7 @@
                                 <span class="material-symbols-rounded" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); font-size: 1.1rem;">schedule</span>
                                 <input type="time" id="booking-out" class="glass-input" style="margin: 0; padding-left: 42px; background: rgba(255,255,255,0.02); opacity: 0.6;">
                             </div>
-                            <div style="font-size: 0.75rem; color: var(--text-tertiary); text-align: center; margin-top: 12px;">Enter check-out time to see estimated fare</div>
+                            <div id="booking-fare-estimate" style="font-size: 0.85rem; color: #FFB066; text-align: center; margin-top: 12px;">Enter check-out time to see estimated fare</div>
                         </div>
                     </div>
                     
@@ -273,11 +480,11 @@
                 <div class="widget-card text-center" style="margin-bottom: 24px; background: rgba(0,0,0,0.4);">
                     <h3 id="receipt-slot-display" class="text-emerald" style="margin-bottom: 8px; font-size: 1.1rem;">No Active Slot</h3>
                     <p class="text-secondary" id="receipt-plate-display" style="font-size: 1.3rem; font-family: 'Space Grotesk', monospace; color: white;">--</p>
-                </div>
-                
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <button id="btn-extend-time" class="btn-primary" style="padding: 14px; font-size: 0.9rem;">Extend +1 Hour</button>
-                    <button id="btn-cancel-booking" class="btn-secondary" style="padding: 14px; font-size: 0.9rem; color: #EF4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);">End Session</button>
+                    <div id="receipt-qr-code" style="margin: 18px auto 10px; width: 160px; height: 160px; border-radius: 18px; background: #0b0b0f; display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);">
+                        <img id="receipt-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=AURA%20PARK%20Exit%20QR" alt="QR code" style="width: 130px; height: 130px; border-radius: 12px;">
+                    </div>
+                    <p id="receipt-qr-note" style="font-size: 0.85rem; color: #FFB066; margin: 0;">Scan QR at exit to complete payment.</p>
+                    <p id="receipt-fare-display" style="margin-top: 10px; color: #FFB066; font-size: 0.95rem;">Fare estimate unavailable</p>
                 </div>
             </div>
         </div>
@@ -286,10 +493,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script src="js/main.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/charts.js"></script>
-    <script src="js/map.js"></script>
+<script src="main.js"></script>
+<script src="animations.js"></script>
+<script src="charts.js"></script>
+<script src="map.js"></script>
+    <script src="landing.js"></script>
 </body>
 </html>
